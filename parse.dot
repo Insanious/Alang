@@ -2,16 +2,16 @@ digraph {
 	0 [label="Block"];
 	1 [label="Binary operation '='"];
 	0 -> 1
-	2 [label="Dot '.'"];
+	2 [label="Dot"];
 	1 -> 2
 	3 [label="Value 1"];
 	1 -> 3
 	4 [label="Variable x"];
 	2 -> 4
-	5 [label="Dot '.'"];
-	4 -> 5
+	5 [label="Dot"];
+	2 -> 5
 	6 [label="Variable str"];
 	5 -> 6
 	7 [label="Variable int"];
-	6 -> 7
+	5 -> 7
 }
