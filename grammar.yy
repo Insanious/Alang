@@ -84,6 +84,7 @@
 %token <std::string> COLON
 %token <std::string> SEMICOLON
 %token <std::string> COMMA
+%token <std::string> LARROW
 %token <std::string> LROUND
 %token <std::string> RROUND
 %token <std::string> LSQUARE
@@ -125,6 +126,7 @@
 %type <Statement*> op_3
 %type <Statement*> op_last
 %type <Statement*> vardot
+%type <Statement*> vararrow
 %type <Statement*> var
 
 
@@ -142,6 +144,8 @@ stmts		: stmt										{ log_grammar("stmts:stmt"); 					$$ = $1; }
  			| stmts SEMICOLON stmt						{ log_grammar("stmts:stmts; stmt"); 			$$ = new Statement("Statements", ""); $$->children.push_back($3); }
 
 stmt 		: assignment								{ log_grammar("stmt:assignment");				$$ = $1; }
+			| vararrow									{ log_grammar("stmt:vararrow"); 				$$ = $1; }
+
 			//| exp										{ log_grammar("stmt:exp");						$$ = $1; }
 /*
 	 | if END										{ log_grammar("stmt:if END");					std::vector<Statement*> expr; expr.push_back($1); $$ = new IfStatementNode(expr); }
@@ -157,7 +161,9 @@ stmt 		: assignment								{ log_grammar("stmt:assignment");				$$ = $1; }
 	 | VAR explist									{ log_grammar("stmt:functioncall"); 			$$ = new FunctionCallNode(new VariableNode(environment, $1), $2); }*/
 
 assignment	: exp ASSIGNMENT exp						{ log_grammar("assignment:exp = exp");			$$ = new Statement("Binary operation", "'='"); $$->children.push_back($1); $$->children.push_back($3); }
-
+vararrow 	: var LARROW var							{ log_grammar("assignment:exp -> exp");			$$ = $1; Statement* arrow = new Statement("Arrow", "'->'"); arrow->children.push_back($3); $1->children.push_back(arrow); }
+			| vararrow LARROW var						{ log_grammar("assignment:vararrow -> exp"); 	Statement* child = $1->children.front(); Statement* arrow = new Statement("Arrow", "'->'"); arrow->children.push_back($3); child->children.push_back(arrow); $$ = child; }
+// this is incorrect, please fix
 exp			: op										{ log_grammar("exp:op");						$$ = $1; }
 
 op 			: op_1										{ log_grammar("op:op_1");						$$ = $1; }
@@ -185,5 +191,8 @@ op_last		: var										{ log_grammar("op_last:VAR"); 					$$ = $1; }
 var 		: VAR										{ log_grammar("op_last:VAR"); 					$$ = new Statement("Variable", $1); }
 			| vardot									{ log_grammar("op_last:vardot"); 				$$ = $1; }
 
-vardot : var DOT var									{ log_grammar("vardot:var DOT var");			$$ = new Statement("Dot", ""); $$->children.push_back($1); $$->children.push_back($3);  }
+vardot : var DOT var									{ log_grammar("vardot:var DOT var");			$$ = $1; Statement* dot = new Statement("Dot", ""); dot->children.push_back($3);  $$->children.push_back(dot); }
 	   | vardot DOT var									{ log_grammar("vardot:vardot DOT var");			$$ = $1; $$->children.push_back($3); }
+
+//vararrow : VAR LARROW VAR								{ log_grammar("vardot:VAR LARROW VAR");			$$ = new Statement("Variable", $1); Statement* arrow = new Statement("Arrow", ""); arrow->children.push_back(new Statement("Variable", $3));  $$->children.push_back(arrow); }
+//		 | vararrow LARROW VAR							{ log_grammar("vardot:vararrow LARROW VAR");			$$ = $1; $$->children.push_back(new Statement("Variable", $3)); }

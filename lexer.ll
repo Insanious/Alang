@@ -42,6 +42,7 @@ in						{ log_lexer(yytext); return yy::parser::make_IN(yytext); }
 \%						{ log_lexer(yytext); return yy::parser::make_MOD(yytext); }
 \=\=					{ log_lexer(yytext); return yy::parser::make_EQUALS(yytext); }
 \!\=					{ log_lexer(yytext); return yy::parser::make_NOT_EQUALS(yytext); }
+\-\>					{ log_lexer(yytext); return yy::parser::make_LARROW(yytext); }
 \<						{ log_lexer(yytext); return yy::parser::make_LESS(yytext); }
 \>						{ log_lexer(yytext); return yy::parser::make_MORE(yytext); }
 \<\=					{ log_lexer(yytext); return yy::parser::make_LESS_OR_EQUAL(yytext); }
