@@ -13,7 +13,8 @@ class Node
 public:
 	std::string tag, value;
 	std::vector<Node*> children;
-	Node(std::string t, std::string v);
+	Node(std::string tag, std::string value);
+	Node(std::string tag);
 	Node();
 
 	void dump(int depth=0);
@@ -32,9 +33,7 @@ public:
 
 	Statement();
 	Statement(std::string tag, std::string value);
-	Statement(std::string tag, std::string value, std::vector<Statement*> statements);
-	Statement(std::string tag, std::string value, Statement* statement);
-	Statement(std::string tag, std::string value, Statement* left, Statement* right);
+	Statement(std::string tag);
 	~Statement();
 
 	Statement* execute();

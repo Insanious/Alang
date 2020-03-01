@@ -33,6 +33,12 @@ Node::Node(std::string tag, std::string value)
 	this->value = value;
 }
 
+Node::Node(std::string tag)
+{
+	this->tag = tag;
+	this->value = "";
+}
+
 void Node::dump(int depth)
 {
 	for(int i = 0; i < depth; i++)
@@ -102,28 +108,11 @@ Statement::Statement(std::string tag, std::string value) : Node(tag, value)
 	log_calls("Statement::Statement(std::string tag, std::string value)");
 }
 
-Statement::Statement(std::string tag, std::string value, std::vector<Statement*> statements) : Node(tag, value)
+Statement::Statement(std::string tag) : Node(tag, "")
 {
-	for (auto statement : statements)
-		this->children.push_back(statement);
-
-	log_calls("Statement::Statement(std::string tag, std::string value, std::vector<Statement*> statements)");
+	log_calls("Statement::Statement(std::string tag)");
 }
 
-Statement::Statement(std::string tag, std::string value, Statement* statement) : Node(tag, value)
-{
-	this->children.push_back(statement);
-
-	log_calls("Statement::Statement(std::string tag, std::string value, Statement* statement)");
-}
-
-Statement::Statement(std::string tag, std::string value, Statement* left, Statement* right) : Node(tag, value)
-{
-	this->children.push_back(left);
-	this->children.push_back(right);
-
-	log_calls("Statement::Statement(std::string tag, std::string value, Statement* left, Statement* right)");
-}
 
 Statement* Statement::execute()
 {

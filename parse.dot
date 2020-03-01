@@ -4,12 +4,14 @@ digraph {
 	0 -> 1
 	2 [label="Binary operation '='"];
 	1 -> 2
-	3 [label="Binary operation '+'"];
+	3 [label="Dot operation '.'"];
 	2 -> 3
 	4 [label="Value 3"];
 	2 -> 4
 	5 [label="Variable x"];
 	3 -> 5
-	6 [label="Value 1"];
+	6 [label="Variable y"];
 	3 -> 6
+	7 [label="Variable z"];
+	3 -> 7
 }

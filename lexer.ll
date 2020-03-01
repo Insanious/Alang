@@ -63,6 +63,7 @@ function				{ log_lexer(yytext); return yy::parser::make_FUNCTION(yytext); }
 break					{ log_lexer(yytext); return yy::parser::make_BREAK(yytext); }
 return					{ log_lexer(yytext); return yy::parser::make_RETURN(yytext); }
 print					{ log_lexer(yytext); return yy::parser::make_PRINT(yytext); }
+contains				{ log_lexer(yytext); return yy::parser::make_CONTAINS(yytext); }
 
  /* Arguments */
 
@@ -89,9 +90,10 @@ true					{ log_lexer(yytext); return yy::parser::make_VALUE(yytext); }
 \}						{ log_lexer(yytext); return yy::parser::make_RCURLY(yytext); }
 
  /* Whitespace */
-" "+					{ /*log_lexer("\" \"+"); return yy::parser::make_WHITESPACE(yytext);*/ }
-\t+						{ /*log_lexer("\"\\t\"+"); return yy::parser::make_WHITESPACE(yytext);*/ }
+" "+					{}
+\t+						{}
 \n+						{ lineNumber++; log_lexer("\"\\n\"+"); /*return yy::parser::make_NEWLINE(yytext);*/ }
+\/\/.*\n+				{}
 
  /* Misc */
 <<EOF>>					{ return yy::parser::make_EXIT(); }

@@ -5,9 +5,9 @@
 extern FILE* yyin;
 bool debug_lex = true;
 bool debug_grammar = true;
-bool debug_assignments = true;
-bool debug_calls = true;
-bool debug_evaluations = true;
+bool debug_assignments = false;
+bool debug_calls = false;
+bool debug_evaluations = false;
 
 void yy::parser::error(std::string const&err)
 {
