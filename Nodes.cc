@@ -50,6 +50,8 @@ void Node::dump(int depth)
 
 void Node::createGraphViz()
 {
+	log_calls("void Node::createGraphViz()");
+
 	std::queue<Node*> nodes;
 	int id = 0;
 	int parentId = -1;
@@ -116,10 +118,7 @@ Statement::Statement(std::string tag) : Node(tag, "")
 
 Statement* Statement::execute()
 {
-	return nullptr;
-}
+	log_calls("Statement* Statement::execute()");
 
-void Statement::dot(Statement* dot)
-{
-	this->children.push_back(dot);
+	return nullptr;
 }

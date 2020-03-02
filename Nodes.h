@@ -38,8 +38,6 @@ public:
 
 	Statement* execute();
 
-	void dot(Statement* dot);
-
 };
 
 

@@ -63,7 +63,6 @@ function				{ log_lexer(yytext); return yy::parser::make_FUNCTION(yytext); }
 break					{ log_lexer(yytext); return yy::parser::make_BREAK(yytext); }
 return					{ log_lexer(yytext); return yy::parser::make_RETURN(yytext); }
 print					{ log_lexer(yytext); return yy::parser::make_PRINT(yytext); }
-contains				{ log_lexer(yytext); return yy::parser::make_CONTAINS(yytext); }
 
  /* Arguments */
 
